@@ -1,0 +1,13 @@
+// for myEditText I added android:digits="1234567890/-"
+myEditText.inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+myEditText.filters = arrayOf(
+            InputFilter { src, start, end, dst, dstart, dend ->
+                // for backspace, forward space and every other character except for [0-9] and hyphen(-) & Forward Slash(/)
+                if (src == "" && src == " " && !src.toString().matches(Regex("[0-9\\-/ ]+"))) {
+                    return@InputFilter src.replace(Regex("^[0-9\\-/ ]+"), "").trim()
+                }
+                if (src.toString().matches(Regex("[0-9\\-/ ]+"))) {
+                    src.trim()
+                } else ""
+            }
+        )
